@@ -47,8 +47,6 @@
 		 		VALUES(#{user_num}, SHA2(#{user_pw},256), #{user_name}, #{dept_num}, #{user_tel}, #{user_email}, #{user_add} )
 		</insert>
 		
-
-		
 		<!-- 유저 이름 검색 -->
 		<select id = "searchName" resultType = "Users">
 				SELECT *

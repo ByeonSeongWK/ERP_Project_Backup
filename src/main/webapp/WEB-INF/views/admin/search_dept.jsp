@@ -125,7 +125,11 @@ $(document).ready(function() {
 					alert('부서 등록이 완료되었습니다!');
 					
 					
+				},
+				error : function() {
+					alert('부서등록 실패');
 				}
+				
 				
 			});
 			}
@@ -215,10 +219,11 @@ $(document).ready(function() {
 		$('#delete_btn').click(function(){
 			
 			var dept_num = $('input[name="table_dept_num"]:checked').val(); // radio 버튼을 눌렀을때 체크에 해당하는 name값을 가져온다.	
-			var dept_name = $('#dept_name').val();
 			var dept_tel = $('#dept_tel').val();
+			var dept_id = '#' + dept_num;
+			var dept_name = $(dept_id).val();
 			
-			var delete_check = confirm(dept_name + '정말 삭제 하시겠습니까?');
+			var delete_check = confirm(dept_name +'를 삭제 하시겠습니까?');
 	
 			if(delete_check == false) {
 				return;
@@ -328,15 +333,27 @@ $(document).ready(function() {
 	<!-- nav 끝 -->
 
 	<!-- contents 부분 -->
-	<div id="contents" style="float: right; width: 88%; height: 100%">
+	<div id="contents" style="float: right; width: 88%; height: 100%;">
 
-		<div class="container">
+		<div class="container" style="margin-top: 5%;">
 			<!--  전체 기준 그리드 -->
+			
+
+			<!-- 두 번째 row칸 시작 -->
 			<div class="row">
+			<!-- 테이블 항목(왼쪽) -->
+				<div class="form-group col-sm-6 col-md-6 col-lg-6" class="table-responsive"	style="width: 570px; height: 700px; margin-left: 1%;">
+					
+					<div class="jumbotron" style="background-color: #f7fbfc; border: 2px solid #b9d7ea;">
+					
+					
+					
+					
+					
 
 				<!-- 검색 폼, 테이블 -->
-				<div class="form-group col-sm-6 col-md-6 col-lg-6">
-					<div style="margin: 5% 0 0 4%">
+				
+					
 						<!-- 검색어 입력 -->
 						<div class="row">
 							<div class="form-group col-sm-6 col-md-6 col-lg-6">
@@ -350,28 +367,22 @@ $(document).ready(function() {
 									style="background-color: #b9d7ea; border: 1px solid #b9d7ea"
 									id="searchDeptBtn">검색</button>
 							</div>
+							<button type ="button" id = "delete_btn" class = "btn btn-warning">삭제</button>
+											<button type ="button" id = "table_update_btn" class = "btn btn-info">수정</button>
 
 							<!-- 권한 관리 -->
 							<div class="form-group col-sm-3 col-md-3 col-lg-3">
-									<a href = "correct_auth" class="btn btn-info btn-block" style="background-color: #769fcd; border: 1px solid #769fcd">권한 관리</a>
 							</div>
-						</div>
 						
-						<div class="form-group col-sm-6 col-md-6 col-lg-6">
-						<!-- 빈칸 잡아주는 역할 -->
-						</div>
-					</div>
+						
+					
+					
 				</div>
-			</div>
-			<!-- 첫 번째 row칸 끝 -->
-
-			<!-- 두 번째 row칸 시작 -->
-			<div class="row">
-			<!-- 테이블 항목(왼쪽) -->
-				<div class="form-group col-sm-6 col-md-6 col-lg-6" class="table-responsive"	style="width: 570px; height: 700px; margin-left: 1%;">
-					
-					<div class="jumbotron" style="background-color: #f7fbfc; border-top: 1px solid #000; border-bottom: 1px solid #000">
-					
+			
+			
+			
+			
+			
 						<!-- 부서목록 제목 -->
 						<h4 style="text-align: center; font-size: 20px; margin-bottom: 10%">부서 목록</h4>
 						
@@ -397,6 +408,7 @@ $(document).ready(function() {
 										<tr>
 											<td style="width: 20%; text-align: center">
 												<input type ="radio" name = "table_dept_num" value = "${dept.dept_num}" />
+												<input type = "hidden" id = "${dept.dept_num}" value="${dept.dept_name }"/>
 											</td>
 											<td style="width: 30%; text-align: center">${dept.dept_name }</td>
 											<td style="width: 20%; text-align: center">${dept.dept_num }</td>
@@ -410,8 +422,7 @@ $(document).ready(function() {
 						</div>
 								<!-- 삭제, 수정 버튼 -->
 								<div style = "width: 100%; height: 30px;">
-											<button type ="button" id = "delete_btn" class = "btn btn-warning">삭제</button>
-											<button type ="button" id = "table_update_btn" class = "btn btn-info">수정</button>
+											
 								</div>
 								
 					</div>
@@ -420,7 +431,11 @@ $(document).ready(function() {
 
 				<!-- 등록, 수정 하는 화면(오른쪽) -->
 				<div class="form-group col-sm-6 col-md-6 col-lg-6" style="height: 700px">
-					<div class="jumbotron" style="width: 100%; height: 647px; background-color: #f7fbfc; border-top: 1px solid #000; border-bottom: 1px solid #000">
+			
+					<div class="jumbotron" style="width: 100%; height: 647px; background-color: #f7fbfc; border: 2px solid #b9d7ea">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<div style = "width: 100%; height: 49px"></div>
+					</div>
 						<h4 style="text-align: center; font-size: 20px" id = "dept_add">부서 등록</h4>
 						<h4 style="text-align: center; font-size: 20px" id = "dept_update">부서 수정</h4>
 						

@@ -86,7 +86,8 @@
             <!-- <input id="tab4" type="radio" name="tabs" />
             <label for="tab4">부서미정</label> -->
 
-            <section id="con1">
+			<c:forEach var = "auth_dept" items = "${auth_list}" >
+            <section id="con${i}">
               <table width="300" height="400" cellpadding="0" cellspacing="0"  border="1"  >
                 <tr class="table_head">
                   <td>테이블 명</td>
@@ -95,9 +96,7 @@
                 </tr>
                 <tr>
                   <td>영업</td>
-                  <td>
-                    <input type="checkbox" />
-                  </td>
+                  <td><input type="checkbox" /></td>
                   <td><input type="checkbox" /></td>
                 </tr>
                 <tr>
@@ -132,6 +131,9 @@
                 </tr>
               </table>
             </section>
+            </c:forEach>
+            
+            
             <section id="con2">
               <table
                 width="300"
