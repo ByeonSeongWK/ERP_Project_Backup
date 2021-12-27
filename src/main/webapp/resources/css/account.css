@@ -1,0 +1,178 @@
+@charset "UTF-8";
+
+
+.container h3 {
+  font-size: 22px;
+  font-weight: 600;
+  height: 38px;
+  padding-left: 20px;
+  line-height: 38px;
+  font-family: "KoPubWorld돋움체";
+  border-bottom: 3px solid #769fcd;
+}
+
+#add_Acc {
+  padding-top: 5px;
+  width: 100%;
+  height: 32px;
+  border-bottom: 2px solid #769fcd;
+}
+#add_con {
+  float: left;
+  margin-left: 20px;
+  font-size: 16px;
+  color: #444;
+}
+
+#add_con li {
+  float: left;
+  margin-left: 10px;
+  height: 23px;
+}
+#add_con input {
+  width: 100px;
+  height: 20px;
+}
+.acc_search {
+  width: 130px;
+  height: 23px;
+  line-height: 25px;
+  background-color: rgb(228, 228, 228);
+}
+.acc_search input {
+  width: 80px;
+  height: 20px;
+  outline: none;
+  border: none;
+}
+.acc_search input:focus {
+  outline: none;
+  border: none;
+}
+#add_con .acc_search > i {
+  font-size: 18px;
+  line-height: 22px;
+  cursor: pointer;
+}
+.acc_search:focus-within {
+  outline: 1.5px solid #769fcd;
+  border-radius: 3px;
+}
+.acc_search {
+  border: 1px solid #769fcd;
+  line-height: 100%;
+}
+
+#add_conday {
+  float: left;
+  margin-left: 20px;
+  font-size: 16px;
+  color: #444;
+}
+
+#add_conday li {
+  float: left;
+}
+.acc_searchday li {
+  float: left;
+  width: 200px;
+}
+.acc_searchday input {
+  width: 150px;
+  margin-left: 10px;
+}
+/* 조회 테이블 */
+.table_title div {
+  float: left;
+  box-sizing: border-box;
+  border-right: 0.5px solid #777;
+  height: 25px;
+  border-bottom: 2px solid #769fcd;
+}
+.table_title div:last-child {
+  border-right: none;
+}
+.table_con div {
+  float: left;
+  box-sizing: border-box;
+  border-bottom: 0.5px solid #777;
+  border-right: 0.5px solid #777;
+  height: 25px;
+}
+.table_con div:last-child {
+  border-right: none;
+}
+.table_con input {
+  cursor: pointer;
+  zoom: 1.4;
+  margin-top: 2px;
+}
+.selected {
+  background-color: #f2e6d6;
+}
+
+.add_table > .table_con {
+  cursor: pointer;
+}
+
+.add_table > .table_con input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  box-sizing: border-box;
+  margin: 0;
+  outline: 0;
+  font-size: 12px;
+  font-weight: 200;
+}
+
+/* .add_table .table_con div:focus-within {
+  background-color: aqua;
+} */
+/*
+#read_acc {
+  width: 1600px;s
+  height: 500px;
+}
+#read_con {
+  width: 100%;
+  height: 27px;
+  background-color: #d6e6f2;
+}
+#read_con:focus {
+  background-color: #f2e6d6;
+}
+#read_con li {
+  float: left;
+  height: 20px;
+  font-size: 16px;
+  font-family: "KoPubWorld돋움체";
+  text-align: center;
+  border: 1px solid #769fcd;
+  padding: 2px 10px;
+}
+#read_con li input {
+  width: 100%;
+  height: 80%;
+}
+#read_con .read_pay {
+  width: 40px;
+}
+#read_con .read_ctg {
+  width: 100px;
+}
+#read_con .read_date {
+  width: 100px;
+}
+#read_con .read_amnt {
+  width: 100px;
+}
+#read_con .read_lct {
+  width: 60px;
+}
+#read_con .read_user {
+  width: 60px;
+}
+#read_con .read_note {
+  width: 200px;
+} */

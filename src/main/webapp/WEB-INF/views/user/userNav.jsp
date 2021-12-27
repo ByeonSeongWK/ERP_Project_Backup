@@ -42,7 +42,7 @@
             <li><a href="supplier">공급처관리</a></li>
             <li><a href="clients">고객관리</a></li>
             <li><a href="orders">발주관리</a></li>
-            <li><a href="">회계</a></li>
+            <li><a href="accounting">회계</a></li>
           </ul>
         </div>
       </div>

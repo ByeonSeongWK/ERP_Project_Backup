@@ -45,7 +45,7 @@ public class MainController {
 	// 페이지 이동관리(테스트)
 	
 	// -- user page
-	// userMain(마이페이지)
+	// myPage(마이페이지)
 	@RequestMapping(value="/myPage", method = RequestMethod.GET)
 	public String userMain(Model model) {
 		return "user/myPage";
@@ -92,7 +92,11 @@ public class MainController {
 	public String supplier(Model model) {
 		return "user/supplier";
 	}
-	
+	// accounting (회계)	
+	@RequestMapping(value ="/accounting", method = RequestMethod.GET)
+	public String accounting(Model model) {
+		return "user/accounting";
+	}
 	
 	// -- 액션시 기능들
 	// url -- loginAction일 경우
