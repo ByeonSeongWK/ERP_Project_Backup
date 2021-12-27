@@ -78,7 +78,7 @@
 						<div style="width: 165px; text-align: center">금액</div>
 						<div style="width: 165px; text-align: center">발생위치</div>
 						<div style="width: 165px; text-align: center">작업자</div>
-						<div style="width: 685px; text-align: center">비고</div>
+						<div style="width: 680px; text-align: center">비고</div>
 					</div>
 					<!-- 내용 -->
 					<div class="read_all"
@@ -93,7 +93,7 @@
 							<div style="width: 165px; text-align: center"></div>
 							<div style="width: 165px; text-align: center"></div>
 							<div style="width: 165px; text-align: center"></div>
-							<div style="width: 668px; text-align: center"></div>
+							<div style="width: 663px; text-align: center"></div>
 						</div>
 					</div>
 				</div>
