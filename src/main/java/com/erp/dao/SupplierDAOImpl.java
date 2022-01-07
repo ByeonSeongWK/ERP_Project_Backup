@@ -24,8 +24,19 @@ public class SupplierDAOImpl implements SupplierDAO {
 	}
 
 	@Override
+	public List<Supplier> searchSupplier(String supp_name) throws Exception {
+		return sqlSession.selectList(SESSION + ".searchSupplier", supp_name);
+	}
+	
+	@Override
 	public void addSupplier(Supplier supplier) throws Exception {
 		sqlSession.insert(SESSION + ".addSupplier", supplier);
 	}
+
+	@Override
+	public List<Supplier> searchSupplier_Del(String supp_id) throws Exception {
+		return sqlSession.selectList(SESSION + ".searchSupplier_Del",supp_id);
+	}
+
 
 }

@@ -6,16 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>ERP Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
-    <!-- 기본 CSS -->
-    <link rel="stylesheet" href="${path}/resources/css/reset.css" />
-    <!-- 네비 CSS -->
-    <link rel="stylesheet" href="${path}/resources/css/erpNav.css" />
-    <!-- 부트스트랩 CSS -->
-    <link rel="stylesheet" href="${path}/resources/css/bootstrap/bootstrap.css" />
-    <link rel="stylesheet" href="${path}/resources/css/bootstrap/custom.css" />
-    <!-- 제이쿼리  -->
-    <script src="${path}/resources/js/jquery.js"></script>
 	<style>
 	.table-responsive{
 		-ms-overflow-style: none; scrollbar-width: none;
@@ -24,46 +14,171 @@
 		display: none;
 	}
 	</style>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+	rel="stylesheet" />
+	
+<!-- 제이쿼리  -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<%-- <script src="${path}/resources/js/jquery.js"></script> --%>
+<!-- 기본 CSS -->
+<link rel="stylesheet" href="${path}/resources/css/reset.css" />
+<!-- 네비 CSS -->
+<link rel="stylesheet" href="${path}/resources/css/erpNav.css" />
+<!-- 부트스트랩 CSS -->
+<link rel="stylesheet" href="${path}/resources/css/bootstrap/bootstrap.css" />
+<link rel="stylesheet" href="${path}/resources/css/bootstrap/custom.css" />
+<!-- 부트스트랩 JS -->
+<script src="${path}/resources/js/bootstrap.js"></script>
+<!-- AJAX -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery.min.js"
+	charset="UTF-8"></script>
+<script>
+$(document).ready(function(){
+	
+	// 공급처 이름으로 공급처 검색 ajax	
+	$('#searchSuppBtn').click(function(){
+		var supp_name	= $('#searchSuppName').val();
+		
+		$.ajax({
+			type: 'POST',
+			url: './searchSupplier',
+			data: {
+			 	supp_name	: supp_name
+			},
+			dataType: 'JSON',
+			success : function(data) {
+				$('#suppTableList').empty();
+				var str = '';
+					str +='<table  style="width: 85vw; height: auto; text-align: center" class="table table-hover" id="suppTableList" >';
+		          			for(var i = 0; i < data.length; i++) {
+		          				str += '<tr>';
+			          				str += '<td style="width: 2vw; text-align: center; line-height: 30px">';
+			          				str += '<label><input type="checkbox" value="'+data[i].supp_id+'"/></label></td>';
+			          				str += '<td style="width: 6.5vw; text-align: center; line-height: 30px">'+data[i].supp_id+'</td>';
+			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_name+'</td>';
+			          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_addr+'</td>';
+			          				str += '<td style="width: 9vw; text-align: center; line-height: 30px">'+data[i].supp_tel+'</td>';
+			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].user_num+'</td>';
+			          				str += '<td style="width: 9vw; text-align: center; line-height: 30px">'+data[i].user_tel+'</td>';
+			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_type+'</td>';
+			          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_note+'</td>';
+			          				str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
+			          				str += '<button type="button" class="btn btn-info btn-block"> 수정</button></td>';
+		          				str += '</tr>';
+								}
+	      				str += '</table>';
+					$('#suppTableList').append(str); 
+					
+			},
+			error : function(){
+				alert('등록되지 않은 공급처입니다!	');
+				return;
+			}
+			
+		});
+		
+	});
+	// 공급처 검색 ajax 종료
+	
+	
+	
+	//공급처 등록 ajax
+	$('#addSuppAction').click(function(){
+		var supp_id		= $('#supp_id').val();
+		var supp_name	= $('#supp_name').val();
+	 	var supp_addr	= $('#supp_addr').val();
+		var supp_tel		= $('#supp_tel').val();
+		var user_num		= $('#user_num').val();
+		var user_tel		= $('#user_tel').val();
+		var supp_type	= $('#supp_type').val();
+		var supp_note	= $('#supp_note').val();
+		
+		$.ajax({
+			
+			type: 'POST',
+			url: './addSupplierAction',
+			data: {
+			 	supp_id		: supp_id,
+			 	supp_name	: supp_name,
+				supp_addr	: supp_addr,
+				supp_tel		: supp_tel,
+				user_num	: user_num,
+				user_tel		: user_tel,
+				supp_type	: supp_type,
+				supp_note	: supp_note
+			},
+			dataType: 'JSON',
+			success : function(data) {
+				$('#addSuppModal').modal('hide');
+				alert('공급처 추가 완료');
+				$('#suppTableList').empty();
+				var str = '';
+					str +='<table  style="width: 85vw; height: auto; text-align: center" class="table table-hover" id="suppTableList" >';
+		          			for(var i = 0; i < data.length; i++) {
+		          				str += '<tr>';
+			          				str += '<td style="width: 2vw; text-align: center; line-height: 30px">';
+			          				str += '<label><input type="checkbox" value="'+data[i].supp_id+'"/></label></td>';
+			          				str += '<td style="width: 6.5vw; text-align: center; line-height: 30px">'+data[i].supp_id+'</td>';
+			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_name+'</td>';
+			          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_addr+'</td>';
+			          				str += '<td style="width: 9vw; text-align: center; line-height: 30px">'+data[i].supp_tel+'</td>';
+			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].user_num+'</td>';
+			          				str += '<td style="width: 9vw; text-align: center; line-height: 30px">'+data[i].user_tel+'</td>';
+			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_type+'</td>';
+			          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_note+'</td>';
+			          				str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
+			          				str += '<button type="button" class="btn btn-info btn-block"> 수정</button></td>';
+		          				str += '</tr>';
+								}
+	      				str += '</table>';
+					$('#suppTableList').append(str); 
+					
+			},
+			error : function(){
+				alert('중복된 공급처 ID는 등록할 수 없습니다!');
+				return;
+			}
+			
+		});
+		// 공급처 등록 ajax 종료
+	});
+	
+	
+	// 삭제 버튼 눌렀을 때 ajax(checkbox 선택)
+	$('#deleteSuppBtn').click(function(){
+		
+		var check = confirm('정말 삭제하시겠습니까?');
+		
+		if(check != true) {
+			
+			return;
+		}
+		else {
+			// 체크한 목록들을 배열로 만들어서 배열로 받아옴
+			var supp_id = [] ; 
+			
+			$('input[name="table_supp_id"]:checked').each(function(){
+				supp_id.push($(this).val());
+				alert(supp_id);
+			});
+			
+			
+			
+		}// else
+		
+	
+	});
+});
+</script>
+
 </head>
 
   <body>
     <div id="wrap">
       <!-- nav 시작 -->
       <jsp:include page = "userNav.jsp"/>
-<%--
-      <!-- nav bar -->
-      <div id="nav">
-        <!-- nav 상단부분 -->
-        <div class="nav_top">
-          <div class="profile"></div>
-          <span>user</span>
-        </div>
 
-        <!-- nav 하단부분 -->
-        <div class="nav_bottom">
-          <ul class="nav_list">
-            <li><a href="main">ERP_Project</a></li>
-            <li><a href="myPage">마이페이지</a></li>
-            <li><a href="product">제품관리</a></li>
-            <li><a href="salesList">영업관리</a></li>
-            <li style="background-color: #b9d7ea">
-              <a href="supplier">공급처관리</a>
-            </li>
-            <li><a href="clients">고객관리</a></li>
-            <li><a href="orders">발주관리</a></li>
-            <li><a href="">회계</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- 상단 bar -->
-      <div id="topBar">
-        <!-- 상단 제목 -->
-        <h2>공급처 관리</h2>
-      
-    </div>
-    <!-- nav 끝 -->
- --%>
     <!-- contents 부분 -->
     <div id="contents" style="float: right; width: 88%; height: 88vh">
       <div>
@@ -78,6 +193,7 @@
                   name="dept_name"
                   class="form-control"
                   placeholder="공급처 검색"
+                  id="searchSuppName"
                 />
               </div>
 
@@ -87,6 +203,7 @@
                   type="button"
                   class="btn btn-info btn-block"
                   style="background-color: #b9d7ea; border: 1px solid #b9d7ea"
+                  id="searchSuppBtn"
                 >
                   검색
                 </button>
@@ -98,6 +215,7 @@
                   type="button"
                   class="btn btn-info btn-block"
                   style="background-color: #769fcd; border: 1px solid #769fcd"
+                  data-toggle="modal" data-target="#addSuppModal"
                 >
                   등록
                 </button>
@@ -105,7 +223,7 @@
 
               <!-- 공급처 삭제 -->
               <div class="form-group col-sm-2 col-md-2 col-lg-2">
-                <button type="button" class="btn btn-danger btn-block">
+                <button type="button" class="btn btn-danger btn-block" id="deleteSuppBtn">
                   삭제
                 </button>
               </div>
@@ -135,14 +253,14 @@
             class="table borderless"
           >
             <tr style="font-weight: 700">
-              <td style="width: 4vw; text-align: center">선택</td>
-              <td style="width: 8.5vw; text-align: center">공급처ID</td>
-              <td style="width: 17vw; text-align: center">공급처 주소</td>
+              <td style="width: 8.5vw; text-align: center" colspan="2">공급처ID</td>
+              <td style="width: 8vw; text-align: center">공급처 이름</td>
+              <td style="width: 15vw; text-align: center">공급처 주소</td>
               <td style="width: 9vw; text-align: center">공급처 전화번호</td>
               <td style="width: 8vw; text-align: center">담당자</td>
               <td style="width: 9vw; text-align: center">담당자 전화번호</td>
               <td style="width: 8vw; text-align: center">업종</td>
-              <td style="width: 17vw; text-align: center">메모</td>
+              <td style="width: 15vw; text-align: center">메모</td>
               <td style="width: 4.5vw; text-align: center">수정</td>
             </tr>
           </table>
@@ -159,411 +277,143 @@
             overflow: scroll-y;
           "
         >
-          <table
-            style="width: 85vw; height: auto; text-align: center"
-            class="table table-hover"
-          >	
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-			<tr>
-	              <td style="width: 4vw; text-align: center; line-height: 30px">
-	                <label><input type="checkbox" value="" /></label>
-	              </td>
-	              <td style="width: 8.5vw; text-align: center; line-height: 30px">
-	                QQL1121
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                부산시 진구
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                051-022-1515
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                홍길동
-	              </td>
-	              <td style="width: 9vw; text-align: center; line-height: 30px">
-	                010-2222-2222
-	              </td>
-	              <td style="width: 8vw; text-align: center; line-height: 30px">
-	                제조업
-	              </td>
-	              <td style="width: 17vw; text-align: center; line-height: 30px">
-	                특이사항 없음
-	              </td>
-	              <td style="width: 4.5vw; text-align: center; line-height: 30px">
-	                <button type="button" class="btn btn-info btn-block">
-	                  수정
-	                </button>
-	              	</td>
-            	</tr>
-
-           
-          </table>
+	          <table
+	            style="width: 85vw; height: auto; text-align: center"
+	            class="table table-hover" id="suppTableList" >	
+	          	<!-- 공급처 리스트 불러오기 -->
+	           	<c:forEach var="supp" items="${supp_list}">
+					<tr>
+			              <td style="width: 2vw; text-align: center; line-height: 30px">
+			                <label><input type="checkbox" name="table_supp_id" value="${supp.supp_id}" /></label>
+			              </td>
+			              <td style="width: 6.5vw; text-align: center; line-height: 30px">
+			                ${supp.supp_id}
+			              </td>
+			              <td style="width: 8vw; text-align: center; line-height: 30px">
+			                ${supp.supp_name}
+			              </td>
+			              <td style="width: 15vw; text-align: center; line-height: 30px">
+			                ${supp.supp_addr}
+			              </td>
+			              <td style="width: 9vw; text-align: center; line-height: 30px">
+			                ${supp.supp_tel}
+			              </td>
+			              <td style="width: 8vw; text-align: center; line-height: 30px">
+			                ${supp.user_num}
+			              </td>
+			              <td style="width: 9vw; text-align: center; line-height: 30px">
+			                ${supp.user_tel}
+			              </td>
+			              <td style="width: 8vw; text-align: center; line-height: 30px">
+			                ${supp.supp_type}
+			              </td>
+			              <td style="width: 15vw; text-align: center; line-height: 30px">
+			                ${supp.supp_note}
+			              </td>
+			              <td style="width: 4.5vw; text-align: center; line-height: 30px">
+			                <button type="button" class="btn btn-info btn-block"> 수정</button>
+			              </td>
+			          	</tr>
+					</c:forEach>
+          	</table>
         </div>
       </div>
     </div>
     <!-- 테이블 끝 -->
   </div>
+  
+  <!-- 공급처 등록 모달  -->
+<div id="addSuppModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		
+			<div class="modal-header">
+				<!-- &times; : 부트스트랩 x 아이콘 만들기 -->
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title" style="text-align: center; font-size: 1.3em">공급처 등록</h4>
+			</div>
+			
+			<div class="modal-body">
+			
+				<!-- 공급처 ID -->
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<label class="form-group">공급처 ID	</label>
+						<input type="text" class = "form-control" name = "supp_id" id ="supp_id">
+					</div>
+				</div>	
+			
+				<!-- 공급처 이름 -->
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<label class="form-group">공급처 이름</label>
+						<input type="text" class = "form-control" name = "supp_name" id ="supp_name">
+					</div>
+				</div>	
+				
+				<!-- 공급처 주소 -->
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<label class="form-group">공급처 주소</label>
+						<input type="text" class = "form-control" name = "supp_addr" id ="supp_addr">
+					</div>
+				</div>	
+				
+				<!-- 공급처 전화번호 -->
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<label class="form-group">공급처 전화번호</label>
+						<input type="text" class = "form-control" name = "supp_tel" id ="supp_tel">
+					</div>
+				</div>	
+				
+				<!-- 담당자(사원 번호)	 -->
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<label class="form-group">담당자(사원 번호)</label>
+						<input type="text" class = "form-control" name = "user_num" id ="user_num">
+					</div>
+				</div>	
+				
+				<!-- 담당자 전화번호 -->
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<label class="form-group">담당자 전화번호</label>
+						<input type="text" class = "form-control" name = "user_tel" id ="user_tel">
+					</div>
+				</div>	
+				
+				<!-- 공급처 업종 -->
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<label class="form-group">업종</label>
+						<input type="text" class = "form-control" name = "supp_type" id ="supp_type">
+					</div>
+				</div>	
+
+				<!-- 공급처 메모 -->
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<label class="form-group">공급처 메모</label>
+						<!-- textarea 는 .val() 이 아닌 .text()로 값을 받아와야 한다. -->
+						<textarea class="form-control" name="supp_note" id="supp_note"style="width:100%; height: 15vh; overflow: visible; resize: none">비고</textarea>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="form-group col-sm-12 col-md-12 col-lg-12">
+						<button type="button" class="btn btn-info btn-block" id ="addSuppAction"
+							style="background-color: #B9D7EA; border: 1px solid #B9D7EA;"> 공급처 등록</button>
+					</div>
+				</div>
+				
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+<!-- 공급처 등록 모달  종료 -->
+
 </body>
 </html>

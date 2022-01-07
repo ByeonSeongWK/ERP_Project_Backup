@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$('#searchNameBtn').click(function() {
 				var user_name = $('#dept_name').val();
 				$.ajax({ // ajax 는 데이터를 받아오는거 url받아오는거 아님 
-							type : 'GET',
+							type : 'POST',
 							url : './searchName',
 							data : {
 								// 문자열 : 변수값...

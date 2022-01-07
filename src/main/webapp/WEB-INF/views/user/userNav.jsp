@@ -13,8 +13,6 @@
     <!-- 부트스트랩 CSS -->
     <link rel="stylesheet" href="${path}/resources/css/bootstrap/bootstrap.css" />
     <link rel="stylesheet" href="${path}/resources/css/bootstrap/custom.css" />
-    <!-- 제이쿼리  -->
-    <script src="${path}/resources/js/jquery.js"></script>
 	
 </head>
 
@@ -62,12 +60,12 @@
       $(document).ready(function () {
       	var url = window.location.pathname;
       	if(url == '/userMain') $('#mainNavItem').addClass('on');
-      	else if(url == 'user/product') $('#productNavItem').addClass('on');
-      	else if(url == 'user/salesList') $('#salesListNavItem').addClass('on');
-      	else if(url == 'user/supplier') $('#supplierNavItem').addClass('on');
-      	else if(url == 'user/clients') $('#clientsNavItem').addClass('on');
-      	else if(url == 'user/orders') $('#ordersNavItem').addClass('on');
-      	else if(url == 'user/accounting') $('#accountingNavItem').addClass('on');
+      	else if(url == '/user/product') $('#productNavItem').addClass('on');
+      	else if(url == '/user/salesList') $('#salesListNavItem').addClass('on');
+      	else if(url == '/user/supplier') $('#supplierNavItem').addClass('on');
+      	else if(url == '/user/clients') $('#clientsNavItem').addClass('on');
+      	else if(url == '/user/orders') $('#ordersNavItem').addClass('on');
+      	else if(url == '/user/accounting') $('#accountingNavItem').addClass('on');
       });
       </script>
 </html>
