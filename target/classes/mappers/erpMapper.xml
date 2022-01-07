@@ -45,7 +45,7 @@
 		<!-- 사원등록 -->
 		<insert id = "join">
 		 		INSERT INTO USERS
-		 		VALUES(#{user_num}, SHA2(#{user_pw},256), #{user_name}, #{dept_num}, #{user_tel}, #{user_email}, #{user_add} )
+		 		VALUES(#{user_num}, SHA2(#{user_pw},256), #{user_name}, #{dept_num}, #{user_tel}, #{user_email}, #{user_addr} )
 		</insert>
 		
 		<!-- 유저 이름 검색 -->
@@ -122,25 +122,42 @@
 			FROM SUPPLIER
 		</select>
 		
-		<!-- 공급처 검색 기능(공급처 명 기준) 
+		<!-- 공급처 검색 기능(공급처 명 기준) -->
 		<select id="searchSupplier" resultType = "Supplier">
 			SELECT *
 			FROM SUPPLIER
-			WHERE supp_id LIKE #{supp_id}
+			WHERE supp_name LIKE #{supp_name}
 		</select>
-		-->
+		
 		
 		<!-- 공급처 등록 기능 -->
 		<insert id = "addSupplier">
-			 INSERT INTO SUPPLIER VALUE(
+			 INSERT INTO SUPPLIER VALUES(
 			 	#{supp_id},
-				#{supp_add},
+			 	#{supp_name},
+				#{supp_addr},
 				#{supp_tel},
 				#{user_num},
 				#{user_tel},
 				#{supp_type},
-				#{supp_note }
+				#{supp_note}
 			 );
 		</insert>
+		
+		
+		<!-- 공급처 검색 기능(공급처 ID 기준 | 삭제할때 사용) -->
+		<select id="searchSupplier_Del" resultType = "Supplier">
+			SELECT *
+			FROM SUPPLIER
+			WHERE supp_id = #{supp_id}
+		</select>
+		
+		
+		<!-- 공급처 삭제 기능 -->
+		<delete id="deleteSupplier">
+			DELETE
+			FROM SUPPLIER
+			WHERE supp_id = #{supp_id}
+		</delete>
 		
 </mapper>

@@ -7,19 +7,19 @@ public class Users {
 	private String	dept_num;
 	private String 	user_tel;
 	private String 	user_email; 	
-	private String 	user_add;
+	private String 	user_addr;
 
 	public Users() {}
 
 	public Users(String user_num, String user_pw, String user_name, String dept_num, String user_tel, String user_email,
-			String user_add) {
+			String user_addr) {
 		this.user_num = user_num;
 		this.user_pw = user_pw;
 		this.user_name = user_name;
 		this.dept_num = dept_num;
 		this.user_tel = user_tel;
 		this.user_email = user_email;
-		this.user_add = user_add;
+		this.user_addr = user_addr;
 	}
 
 	public String getUser_num() {
@@ -70,12 +70,12 @@ public class Users {
 		this.user_email = user_email;
 	}
 
-	public String getUser_add() {
-		return user_add;
+	public String getUser_addr() {
+		return user_addr;
 	}
 
-	public void setUser_add(String user_add) {
-		this.user_add = user_add;
+	public void setUser_addr(String user_addr) {
+		this.user_addr = user_addr;
 	}
 	
 }

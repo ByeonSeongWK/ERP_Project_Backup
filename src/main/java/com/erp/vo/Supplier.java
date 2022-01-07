@@ -2,7 +2,8 @@ package com.erp.vo;
 
 public class Supplier {
 	private String supp_id;
-	private String supp_add;
+	private String supp_name;
+	private String supp_addr;
 	private String supp_tel;
 	private String user_num;
 	private String user_tel;
@@ -11,10 +12,11 @@ public class Supplier {
 	
 	public Supplier() {}
 
-	public Supplier(String supp_id, String supp_add, String supp_tel, String user_num, String user_tel,
+	public Supplier(String supp_id, String supp_name, String supp_addr, String supp_tel, String user_num, String user_tel,
 			String supp_type, String supp_note) {
 		this.supp_id = supp_id;
-		this.supp_add = supp_add;
+		this.supp_name = supp_name;
+		this.supp_addr = supp_addr;
 		this.supp_tel = supp_tel;
 		this.user_num = user_num;
 		this.user_tel = user_tel;
@@ -30,12 +32,20 @@ public class Supplier {
 		this.supp_id = supp_id;
 	}
 
-	public String getSupp_add() {
-		return supp_add;
+	public String getSupp_name() {
+		return supp_name;
+	}
+	
+	public void setSupp_name(String supp_name) {
+		this.supp_name = supp_name;
+	}
+	
+	public String getSupp_addr() {
+		return supp_addr;
 	}
 
-	public void setSupp_add(String supp_add) {
-		this.supp_add = supp_add;
+	public void setSupp_addr(String supp_addr) {
+		this.supp_addr = supp_addr;
 	}
 
 	public String getSupp_tel() {
@@ -74,8 +84,8 @@ public class Supplier {
 		return supp_note;
 	}
 
-	public void setSupp_note(String sup_note) {
-		this.supp_note = sup_note;
+	public void setSupp_note(String supp_note) {
+		this.supp_note = supp_note;
 	}
 	
 }

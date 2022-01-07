@@ -109,7 +109,7 @@ public class AdminController {
 	@RequestMapping(value = "/joinAction", method = RequestMethod.POST)
 	public String joinAction(Users users, String addr1, String addr2, String addr3) throws Exception {
 		
-		users.setUser_add(addr1 + " " + addr2 + " " + addr3);
+		users.setUser_addr(addr1 + " " + addr2 + " " + addr3);
 		
 		service.joinAction(users);
 		

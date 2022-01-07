@@ -94,14 +94,36 @@ public class UsersController {
 		return "user/supplier";
 	}
 	
+	// 공급처 검색
+	@RequestMapping(value = "/searchSupplier", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Supplier> searchSupplier(String supp_name) throws Exception {
+		
+		List<Supplier> supp_list = supp_service.searchSupplier(supp_name);
+		
+		return supp_list;
+	}
+	
+	
+	// 공급처 등록
 	@RequestMapping(value = "/addSupplierAction", method = RequestMethod.POST)
-	public String addSupplierAction(Supplier supplier) throws Exception {
+	@ResponseBody
+	public List<Supplier> addSupplierAction(Supplier supplier) throws Exception {
 		
 		supp_service.addSupplierAction(supplier);
 		
-		return "user/supplier";
+		return supp_service.getSupplierList();
 	}
 	
+	// 공급처 ID 기준으로 리스트 검색(삭제시 사용 기능)
+	@RequestMapping(value="/searchSupplier_Del", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Supplier> searchSupplier_Del(String supp_id) throws Exception {
+		
+		List<Supplier> supp_list = supp_service.searchSupplier_Del(supp_id);
+		
+		return supp_list;
+	}
 	
 	
 	// --- accounting

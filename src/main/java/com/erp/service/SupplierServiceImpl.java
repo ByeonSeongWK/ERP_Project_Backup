@@ -23,9 +23,25 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 	
 	@Override
+	public List<Supplier> searchSupplier(String supp_name) throws Exception {
+		
+		supp_name = "%" + supp_name + "%";
+		
+		return dao.searchSupplier(supp_name);
+	}
+	
+	@Override
 	public void addSupplierAction(Supplier supplier) throws Exception {
 		
 		dao.addSupplier(supplier);
 	}
+
+	@Override
+	public List<Supplier> searchSupplier_Del(String supp_id) throws Exception {
+		
+		return dao.searchSupplier_Del(supp_id);
+	}
+
+
 
 }
