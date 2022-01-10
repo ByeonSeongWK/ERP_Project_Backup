@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="${path}/resources/css/bootstrap/bootstrap.css" />
 <link rel="stylesheet" href="${path}/resources/css/bootstrap/custom.css" /><!-- 제이쿼리 -->
 <script src="${path}/resources/js/bootstrap.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery.min.js" charset="UTF-8"></script><!-- AJAX -->
 <style>
 .table-responsive {
 	-ms-overflow-style: none;
@@ -24,12 +25,14 @@
 }
 </style>
 <script>
-	$(document).ready(
-			function() {
+	$(document).ready(function(){
+			
+			// 제품 이름으로 제품 검색 ajax 
+
 				$('#searchProductBtn').click(function() {
 					var pro_name = $('#pro_name').val();
 					$.ajax({
-						type : 'GET',
+						type : 'POST',
 						url : './searchProduct',
 						data : {
 							pro_name : pro_name
@@ -52,9 +55,71 @@
 							}
 							str += '</table>';
 							$('#productListTable').append(str);
+						},
+						error : function(){
+							alert('등록되지 않은 제품입니다.');
+							return;
 						}
 					});
-				})
+				});
+				
+				// 제품 등록 기능 ajax
+				$('#addProAction').click(function(){
+					var pro_num 		= $('#pro_num').val();
+					var pro_name 	= $('#pro_name').val();
+					var pro_color  	= $('#pro_color').val();
+					var pro_count 	= $('#pro_count').val();
+					var pro_note  	= $('pro_note').val(); 
+					
+					$.ajax({
+						type : 'POST',
+						url : './addProductAction',
+						data : {
+							pro_num		 : pro_num,
+							pro_name 	 : pro_name,
+							pro_color 	 : pro_color,
+							pro_count 	 : pro_count,
+							pro_note 	 : pro_note
+						},
+						dataType : 'JSON',
+						success : function(data) {
+							$('#addProModal').modal('hide');
+							alert('제품 추가 완료');
+							$('#productListTable').empty();
+							var str = '';
+								str += '<table style="width: 85vw; height: auto; text-align: center" class="table table-hover"  id="productListTable">';
+								for(var i = 0; i < data.length; i++){
+									str += '<tr>';
+										str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
+										str += '<label><input type="checkbox" name="table_product_id" value="' + data[i].pro_num + '" /></label></td>';
+										str += '<td style="width: 16.5vw; text-align: center; line-height: 30px">' + data[i].pro_num + '</td>';
+										str += '<td style="width: 16.5vw; text-align: center; line-height: 30px">' + data[i].pro_name + '</td>';
+										str += '<td style="width: 13.5vw; text-align: center; line-height: 30px">'+ data[i].pro_color + '</td>';
+										str += '<td style="width: 13.5vw; text-align: center; line-height: 30px">'+ data[i].pro_count + '</td>';
+										str += '<td style="width: 16vw; text-align: center; line-height: 30px">'+ data[i].pro_note + '</td>';
+										str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
+										str += '<button type="button" class="btn btn-info btn-block">수정</button></td>';
+									str += '</tr>';
+								}
+								str += '</table>';
+							$('#productListTable').append(str);
+							
+							// 완료 후 input 값 빈칸으로 만들기
+							$('#pro_num').val('');
+							$('#pro_name').val('');
+							$('#pro_color').val('');
+							$('#pro_count').val('');
+							$('#pro_note').val('비고');
+						},
+						error : function(){
+							//DB오류(PK중복)
+							alert('중복된 제품은 등록하실수 없습니다.');
+							return;
+						}
+					});
+					// 제품 등록 ajax 종료
+				});
+				
 			});
 </script>
 
@@ -143,12 +208,12 @@
 					</form>
 				</div>
 
-<!-- 공급처 등록 모달  -->
+<!-- 제품 등록 모달  -->
 						
 							<div id="addProModal" class="modal fade" role="dialog">
 								<div class="modal-dialog">
 									<div class="modal-content">
-										<form method="POST" action="./addProductAction">
+										
 										<div class="modal-header">
 											<!-- &times; : 부트스트랩 x 아이콘 만들기 -->
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -208,18 +273,16 @@
 
 											<div class="row">
 												<div class="form-group col-sm-12 col-md-12 col-lg-12">
-													<input type="submit" class="btn btn-info btn-block"
-														id="addProAction"
-														style="background-color: #B9D7EA; border: 1px solid #B9D7EA;"
-														value="제품등록" data-toggle="modal" data-target="Modal">
+													<button type="button" class="btn btn-info btn-block" id="addProAction"
+														style="background-color: #B9D7EA; border: 1px solid #B9D7EA;">제품 등록</button>
 												</div>
 											</div>
 										</div>
-										</form>
+										
 									</div>
 								</div>
 							</div>
-							<!-- 공급처 등록 모달  종료 --> 
+							<!-- 제품 등록 모달  종료 --> 
 
 
 
@@ -246,13 +309,13 @@
 
 				<div class="table-responsive"
 					style="border-bottom: 3px ridge #f9f9f9; width: 85vw; height: 70vh; margin-left: 1.5vw; overflow: scroll-y;">
-					<div id="productListTable">
+					
 						<table style="width: 85vw; height: auto; text-align: center"
-							class="table table-hover">
+							class="table table-hover"  id="productListTable">
 							<c:forEach var="product" items="${product_List }">
 								<tr>
 									<td style="width: 4.5vw; text-align: center; line-height: 30px">
-										<label><input type="checkbox" value="" /></label>
+										<label><input type="checkbox" name="table_product_id" value="${product.pro_num }" /></label>
 									</td>
 									<td
 										style="width: 16.5vw; text-align: center; line-height: 30px">
@@ -276,6 +339,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	
 </body>
 </html>

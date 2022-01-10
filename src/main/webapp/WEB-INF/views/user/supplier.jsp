@@ -108,7 +108,7 @@ $(document).ready(function(){
 				supp_note	: supp_note
 			},
 			dataType: 'JSON',
-			
+		
 			success : function(data) {
 				$('#addSuppModal').modal('hide');
 				alert('공급처 추가 완료');

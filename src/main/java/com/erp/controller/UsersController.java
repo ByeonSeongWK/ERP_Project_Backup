@@ -64,11 +64,12 @@ public class UsersController {
 	
 	// 제품 등록
 	@RequestMapping(value="/addProductAction", method = RequestMethod.POST)
-	public String addProductAction(Product product) throws Exception{
+	@ResponseBody
+	public List <Product> addProductAction(Product product) throws Exception{
 		
 		pro_service.addProductAction(product);
 		
-		return "redirect:/product";
+		return pro_service.getProductList();
 	}
 	// --- clients
 	// clients(고객관리)
