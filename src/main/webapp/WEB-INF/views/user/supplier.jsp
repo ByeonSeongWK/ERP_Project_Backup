@@ -228,6 +228,7 @@ function getSuppID(supp_id) {
 			supp_id: supp_id
 		} ,
 		dataType: "JSON",
+		// function(data)의 data는 컨트롤러에서 받아온 값이다!!!
 		success: function(data){
 			alert('통신 성공!');
 			console.log(data);
@@ -252,10 +253,8 @@ function getSuppID(supp_id) {
 
 
 
-// 수정 ajax 
-
-
-	function updateSupplier() {'#updateSuppAction'
+	// 수정 ajax 
+	function updateSupplier() {
 		
 	var supp_id 		= $('#supp_id_up').val();
 	var supp_name 	= $('#supp_name_up').val();
@@ -267,23 +266,22 @@ function getSuppID(supp_id) {
 	var supp_note 	= $('#supp_note_up').val();
 
 	$.ajax({
-		url: './updateSupllier',
+		url: './updateSupplier',
 		type: 'POST',
 		data: {
-			supp_id		: supp_id,
 			supp_name	: supp_name,
 			supp_addr 	: supp_addr,
 			supp_tel 		: supp_tel,
 			user_num 	: user_num,
 			user_tel 		: user_tel,
 			supp_type	: supp_type,
-			supp_note 	: supp_note
+			supp_note 	: supp_note,
+			supp_id		: supp_id
 		},
-		dataType : 'JSON',
-		success : function(data){
-			$('#updateSuppModal').modal('hide');
-			alert(data.supp_name + '공급처 수정 완료');
-		},
+		success : function(){
+	         $('#updateSuppModal').modal('hide');
+	         alert(supp_name + ' 공급처 수정 완료');
+	    },
 		error : function() {
 			alert('수정 실패');
 		}

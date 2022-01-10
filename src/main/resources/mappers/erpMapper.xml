@@ -179,18 +179,18 @@
 		
 		
 		<!-- 공급처 ID 로 공급처 수정 -->
-		<update id="updateSupllier">
+		<update id="updateSupplier">
 			UPDATE SUPPLIER 
-			SET 
-				supp_name 	= ${supp_name}, 
-				supp_addr 		= ${supp_addr}, 
-				supp_tel 			= ${supp_tel}, 
-				user_num 		= ${user_num}, 
-				user_tel 			= ${user_tel}, 
-				supp_type		= ${supp_type}, 
-				supp_note 		= ${supp_note}
+			SET
+				supp_name 	= #{supp_name}, 
+				supp_addr 		= #{supp_addr}, 
+				supp_tel 			= #{supp_tel}, 
+				user_num 		= #{user_num}, 
+				user_tel 			= #{user_tel}, 
+				supp_type		= #{supp_type}, 
+				supp_note 		= #{supp_note}
 				  
-			WHERE supp_id 	= ${supp_id}
+			WHERE supp_id 	= #{supp_id}
 		</update>
 		
 </mapper>

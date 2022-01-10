@@ -19,6 +19,6 @@ public interface SupplierService {
 	
 	public Supplier getSearchSupplier(String supp_id) throws Exception;
 	
-	public void updateSupllier(String supp_id) throws Exception; 
+	public void updateSupplier(String supp_id) throws Exception; 
 
 }

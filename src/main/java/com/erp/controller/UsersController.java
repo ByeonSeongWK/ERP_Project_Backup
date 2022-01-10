@@ -72,6 +72,8 @@ public class UsersController {
 		
 		return pro_service.getProductList();
 	}
+	
+	
 	// --- clients
 	// clients(고객관리)
 	@RequestMapping(value ="/clients", method = RequestMethod.GET)
@@ -148,13 +150,13 @@ public class UsersController {
 	
 	
 	// 공급처 수정 	
-	@RequestMapping(value="/updateSupllier", method = RequestMethod.POST)
+	@RequestMapping(value="/updateSupplier", method = RequestMethod.POST)
 	@ResponseBody
-	public String updateSupllier(String supp_id) throws Exception {
+	public String updateSupplier(String supp_id) throws Exception {
 		
-		supp_service.updateSupllier(supp_id);
+		supp_service.updateSupplier(supp_id);
 	
-		return "redirect:/supplier";
+		return "0";
 	}
 	
 	// --- accounting
