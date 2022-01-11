@@ -39,40 +39,38 @@ $(document).ready(function(){
 	$('#searchSuppBtn').click(function(){
 		var supp_name	= $('#searchSuppName').val();
 		
-		$.ajax({
-			type: 'POST',
-			url: './searchSupplier',
-			data: {
-			 	supp_name	: supp_name
-			},
-			dataType: 'JSON',
-			success : function(data) {
-				$('#suppTableList').empty();
-				var str = '';
-					str +='<table  style="width: 85vw; height: auto; text-align: center" class="table table-hover" id="suppTableList" >';
-		          			for(var i = 0; i < data.length; i++) {
-		          				str += '<tr>';
-			          				str += '<td style="width: 2vw; text-align: center; line-height: 30px">';
-			          				str += '<label><input type="checkbox" value="'+data[i].supp_id+'"/></label></td>';
-			          				str += '<td style="width: 6.5vw; text-align: center; line-height: 30px">'+data[i].supp_id+'</td>';
-			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_name+'</td>';
-			          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_addr+'</td>';
-			          				str += '<td style="width: 9vw; text-align: center; line-height: 30px">'+data[i].supp_tel+'</td>';
-			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].user_num+'</td>';
-			          				str += '<td style="width: 9vw; text-align: center; line-height: 30px">'+data[i].user_tel+'</td>';
-			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_type+'</td>';
-			          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_note+'</td>';
-			          				str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
-			          				str += '<button type="button" class="btn btn-info btn-block"> 수정</button></td>';
-		          				str += '</tr>';
-								}
-	      				str += '</table>';
-					$('#suppTableList').append(str); 
-					
-			},
-			error : function(){
-				alert('등록되지 않은 공급처입니다!	');
-				return;
+			$.ajax({
+				type: 'POST',
+				url: './searchSupplier',
+				data: {
+				 	supp_name	: supp_name
+				},
+				dataType: 'JSON',
+				success : function(data) {
+					$('#suppTableList').empty();
+					var str = '';
+						str +='<table  style="width: 85vw; height: auto; text-align: center" class="table table-hover" id="suppTableList" >';
+			          			for(var i = 0; i < data.length; i++) {
+			          				str += '<tr>';
+				          				str += '<td style="width: 2vw; text-align: center; line-height: 30px">';
+				          				str += '<label><input type="checkbox" value="'+data[i].supp_id+'"/></label></td>';
+				          				str += '<td style="width: 6.5vw; text-align: center; line-height: 30px">'+data[i].supp_id+'</td>';
+				          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_name+'</td>';
+				          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_addr+'</td>';
+				          				str += '<td style="width: 9vw; text-align: center; line-height: 30px">'+data[i].supp_tel+'</td>';
+				          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].user_num+'</td>';
+				          				str += '<td style="width: 9vw; text-align: center; line-height: 30px">'+data[i].user_tel+'</td>';
+				          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_type+'</td>';
+				          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_note+'</td>';
+				          				str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
+				          				str += '<button type="button" class="btn btn-info btn-block" id = "updateSuppBtn"' 
+				          				str += 'onclick="getSuppID('+data[i].supp_id+')" data-toggle="modal" data-target="#updateSuppModal"> 수정</button>'
+			          				str += '</tr>';
+									}
+		      				str += '</table>';
+						$('#suppTableList').append(str); 
+						
+				}
 			}
 			
 		});
@@ -128,7 +126,10 @@ $(document).ready(function(){
 			          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_type+'</td>';
 			          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_note+'</td>';
 			          				str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
-			          				str += '<button type="button" class="btn btn-info btn-block"> 수정</button></td>';
+			          				str += '<button type="button" class="btn btn-info btn-block" id ="updateSuppAction"'
+			          				str += '<button type="button" class="btn btn-info btn-block" id = "updateSuppBtn"' 
+		          					str += '<button type="button" class="btn btn-info btn-block" id = "updateSuppBtn"' 
+			          				str += 'onclick="getSuppID('+data[i].supp_id+')" data-toggle="modal" data-target="#updateSuppModal"> 수정</button>'
 		          				str += '</tr>';
 								}
 	      				str += '</table>';
@@ -146,7 +147,8 @@ $(document).ready(function(){
 			},
 			error : function(){
 				alert('중복된 공급처 ID는 등록할 수 없습니다!');
-				return;
+				location.reload();
+
 			}
 			
 		});
@@ -200,12 +202,18 @@ $(document).ready(function(){
 				          				str += '<td style="width: 8vw; text-align: center; line-height: 30px">'+data[i].supp_type+'</td>';
 				          				str += '<td style="width: 15vw; text-align: center; line-height: 30px">'+data[i].supp_note+'</td>';
 				          				str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
-				          				str += '<button type="button" class="btn btn-info btn-block"> 수정</button></td>';
+				          				str += '<button type="button" class="btn btn-info btn-block" id ="updateSuppAction"'
+				          				str += '<button type="button" class="btn btn-info btn-block" id = "updateSuppBtn"' 
+			          					str += '<button type="button" class="btn btn-info btn-block" id = "updateSuppBtn"' 
+				          				str += 'onclick="getSuppID('+data[i].supp_id+')" data-toggle="modal" data-target="#updateSuppModal"> 수정</button>'
 			          				str += '</tr>';
 									}
 		      				str += '</table>';
 						$('#suppTableList').append(str); 
 					
+				},
+				error: function(){
+					location.reload();
 				}
 			
 			});
@@ -243,7 +251,8 @@ function getSuppID(supp_id) {
 			$('#supp_note_up').val(data.supp_note);
 		},
 		error: function(){
-			alert('통신 실패!');
+			alert('수정 실패! 다시 시도 해주세요!');
+			location.reload();
 		}
 		
 			
