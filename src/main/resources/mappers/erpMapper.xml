@@ -118,6 +118,19 @@
 			INSERT INTO PRODUCT
 			VALUES ( #{pro_num},#{pro_name},#{pro_color},#{pro_count},#{pro_note})
 		</insert>
+		
+		<!-- 제품 삭제를 위한 검색 -->
+		<select id="searchForDel" resultType="Product">
+			SELECT *
+			FROM PRODUCT
+			WHERE pro_num = #{pro_num}
+		</select>
+		
+		<!-- 제품 삭제 기능 -->
+		<delete id="deleteProduct">
+			DELETE FROM PRODUCT
+			WHERE pro_num = #{pro_num}
+		</delete>
 	
 	
 		<!-- 공급처(Supplier) -->

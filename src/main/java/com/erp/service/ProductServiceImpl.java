@@ -20,7 +20,6 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getProductList() throws Exception {
 
 		return dao.getProductList();
-		
 	}
 
 	@Override
@@ -37,5 +36,21 @@ public class ProductServiceImpl implements ProductService {
 		dao.addProduct(product);
 		
 	}
+	
+	@Override
+	public String searchForDel(String pro_num) throws Exception {
+		
+		return dao.searchForDel(pro_num);
+	}
+
+
+	@Override
+	public void deleteProduct(List<String> pro_num) throws Exception {
+		
+		for(String item : pro_num)
+		dao.deleteProduct(item);
+		
+	}
+
 
 }

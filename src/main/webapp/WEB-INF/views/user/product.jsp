@@ -6,14 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>ERP Project</title>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" /><!-- 기본 CSS -->
-<link rel="stylesheet" href="${path}/resources/css/reset.css" /><!-- 네비 CSS -->
-<link rel="stylesheet" href="${path}/resources/css/erpNav.css" /><!-- 부트스트랩 CSS -->
-<link rel="stylesheet" href="${path}/resources/css/bootstrap/bootstrap.css" />
-<link rel="stylesheet" href="${path}/resources/css/bootstrap/custom.css" /><!-- 제이쿼리 -->
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery.min.js" charset="UTF-8"></script><!-- AJAX -->
 <style>
 .table-responsive {
 	-ms-overflow-style: none;
@@ -24,13 +16,21 @@
 	display: none;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<link 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" /><!-- 기본 CSS -->
+<link rel="stylesheet" href="${path}/resources/css/reset.css" /><!-- 네비 CSS -->
+<link rel="stylesheet" href="${path}/resources/css/erpNav.css" /><!-- 부트스트랩 CSS -->
+<link rel="stylesheet" href="${path}/resources/css/bootstrap/bootstrap.css" />
+<link rel="stylesheet" href="${path}/resources/css/bootstrap/custom.css" /><!-- 제이쿼리 -->
+<script src="${path}/resources/js/bootstrap.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery.min.js" charset="UTF-8"></script><!-- AJAX -->
 <script>
 	$(document).ready(function(){
 			
 			// 제품 이름으로 제품 검색 ajax 
 
 				$('#searchProductBtn').click(function() {
-					var pro_name = $('#search_pro_name').val();
+					var pro_name = $('#searchProName').val();
 					$.ajax({
 						type : 'POST',
 						url : './searchProduct',
@@ -120,6 +120,65 @@
 					// 제품 등록 ajax 종료
 				});
 				
+				
+				
+				//삭제 버튼 눌렀을 때  ajax(checkbox 선택)
+				$('#deleteProBtn').click(function(){
+					
+					var check = confirm('정말 삭제하시겠습니까?');
+					
+					if(check != true) {
+						return;
+					}
+					else {
+						// 체크한 목록들을 배열로 만들어서 배열로 받아옴
+						var pro_num = [];
+						
+						$('input[name="table_product_num"]:checked').each(function(){
+							pro_num.push($(this).val());
+						});
+						
+
+						//제품 삭제 ajax 
+						$.ajax({
+							url : './deleteProduct',
+							type : 'POST',
+							data : {
+								pro_num : pro_num
+							},
+							dataType : "JSON",
+							success : function(data){
+								alert('선택한 제품 삭제 완료');
+								$('#productListTable').empty();
+								var str = '';
+									str += '<table style="width: 85vw; height: auto; text-align: center" class="table table-hover"  id="productListTable">';
+										for(var i = 0; i < data.length; i++){
+											str += '<tr>';
+												str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
+												str += '<label><input type="checkbox" name="table_product_id" value="' + data[i].pro_num + '" /></label></td>';
+												str += '<td style="width: 16.5vw; text-align: center; line-height: 30px">' + data[i].pro_num + '</td>';
+												str += '<td style="width: 16.5vw; text-align: center; line-height: 30px">' + data[i].pro_name + '</td>';
+												str += '<td style="width: 13.5vw; text-align: center; line-height: 30px">'+ data[i].pro_color + '</td>';
+												str += '<td style="width: 13.5vw; text-align: center; line-height: 30px">'+ data[i].pro_count + '</td>';
+												str += '<td style="width: 16vw; text-align: center; line-height: 30px">'+ data[i].pro_note + '</td>';
+												str += '<td style="width: 4.5vw; text-align: center; line-height: 30px">';
+												str += '<button type="button" class="btn btn-info btn-block">수정</button></td>';
+											str += '</tr>';
+										}
+								str += '</table>';
+							$('#productListTable').append(str);
+							},
+							error : function(){
+								location.reload();
+							}
+						});
+					}
+				});
+			// delete 기능 종료
+			
+			
+	
+				
 			});
 </script>
 
@@ -171,8 +230,8 @@
 						<!-- 검색어 입력 -->
 						<div class="row">
 							<div class="form-group col-sm-4 col-md-4 col-lg-4">
-								<input type="text" name="search_pro_name" class="form-control"
-									placeholder="제품 검색" id="search_pro_name" />
+								<input type="text" name="searchProName" class="form-control"
+									placeholder="제품 검색" id="searchProName" />
 							</div>
 
 							<!-- 검색버튼 -->
@@ -195,7 +254,7 @@
 
 							<!-- 제품삭제 -->
 							<div class="form-group col-sm-2 col-md-2 col-lg-2">
-								<button type="button" class="btn btn-danger btn-block">
+								<button type="button" class="btn btn-danger btn-block" id="deleteProBtn">
 									삭제</button>
 							</div>
 
@@ -315,7 +374,7 @@
 							<c:forEach var="product" items="${product_List }">
 								<tr>
 									<td style="width: 4.5vw; text-align: center; line-height: 30px">
-										<label><input type="checkbox" name="table_product_id" value="${product.pro_num }" /></label>
+										<label><input type="checkbox" name="table_product_num" value="${product.pro_num }" /></label>
 									</td>
 									<td
 										style="width: 16.5vw; text-align: center; line-height: 30px">
