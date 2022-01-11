@@ -138,7 +138,10 @@
 							pro_num.push($(this).val());
 						});
 						
-
+						if(pro_num == ''){
+							alert('삭제할 제품을 선택하세요.');
+						}
+						
 						//제품 삭제 ajax 
 						$.ajax({
 							url : './deleteProduct',
