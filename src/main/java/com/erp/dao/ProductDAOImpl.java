@@ -33,4 +33,18 @@ public class ProductDAOImpl implements ProductDAO {
 		sqlSession.insert(SESSION + ".addProduct", product);
 		
 	}
+
+	@Override
+	public String searchForDel(String pro_num) throws Exception {
+		return sqlSession.selectOne(SESSION + ".searchForDel", pro_num);
+	}
+	
+	@Override
+	public void deleteProduct(String pro_num) throws Exception {
+		sqlSession.delete(SESSION + ".deleteProduct", pro_num);
+	}
+
+	
+	
+	
 }

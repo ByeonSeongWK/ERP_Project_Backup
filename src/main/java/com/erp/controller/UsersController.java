@@ -73,6 +73,18 @@ public class UsersController {
 		return pro_service.getProductList();
 	}
 	
+	// 제품 삭제
+	@RequestMapping(value="/deleteProduct", method = RequestMethod.POST)
+	@ResponseBody
+	public List <Product> deleteProduct(@RequestParam(value="pro_num[]") List<String>  pro_num) throws Exception{
+		
+		pro_service.deleteProduct(pro_num);
+		
+		List<Product> proList = pro_service.getProductList();
+		
+		return proList;
+	}
+	
 	
 	// --- clients
 	// clients(고객관리)

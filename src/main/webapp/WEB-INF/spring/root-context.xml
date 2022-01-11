@@ -16,9 +16,9 @@
 	<bean class = "org.springframework.jdbc.datasource.DriverManagerDataSource" id = "dataSource">
 			<property name = "driverClassName" value = "com.mysql.cj.jdbc.Driver" />
 			<property name = "url"
-						value = "jdbc:mysql://127.0.0.1:3306/ERP?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Asia/Seoul" />
+						value = "jdbc:mysql://127.0.0.1:3307/ERP?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Asia/Seoul" />
 			<property name = "username" value = "root" />
-			<property name = "password" value = "12341234" />
+			<property name = "password" value = "1234" />
 	</bean>	
 	
 	<!-- SqlSessionFactory : SQL문을 DAO에 직접 만들고 실행했는데 Spring 사용시점 부터-->

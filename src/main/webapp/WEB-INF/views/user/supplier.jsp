@@ -70,7 +70,7 @@ $(document).ready(function(){
 		      				str += '</table>';
 						$('#suppTableList').append(str); 
 						
-				}
+				
 			}
 			
 		});
