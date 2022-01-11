@@ -30,7 +30,7 @@
 			// 제품 이름으로 제품 검색 ajax 
 
 				$('#searchProductBtn').click(function() {
-					var pro_name = $('#pro_name').val();
+					var pro_name = $('#search_pro_name').val();
 					$.ajax({
 						type : 'POST',
 						url : './searchProduct',
@@ -114,7 +114,7 @@
 						error : function(){
 							//DB오류(PK중복)
 							alert('중복된 제품은 등록하실수 없습니다.');
-							return;
+							location.reload();
 						}
 					});
 					// 제품 등록 ajax 종료
@@ -171,8 +171,8 @@
 						<!-- 검색어 입력 -->
 						<div class="row">
 							<div class="form-group col-sm-4 col-md-4 col-lg-4">
-								<input type="text" name="pro_name" class="form-control"
-									placeholder="제품 검색" id="pro_name" />
+								<input type="text" name="search_pro_name" class="form-control"
+									placeholder="제품 검색" id="search_pro_name" />
 							</div>
 
 							<!-- 검색버튼 -->
